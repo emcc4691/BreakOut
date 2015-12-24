@@ -1,1 +1,1 @@
-﻿body *{padding:0;margin:0;}body canvas{background:#eee;display:block;margin:100px auto;width:1000px;height:500px;border:3px solid #acc;}
+﻿body *{padding:0;margin:0;}body canvas{background:#eee;display:block;margin:100px auto;width:1000px;height:500px;border:3px solid #acc;}body .button-row{width:212px;margin:100px auto;}body .button{height:30px;width:100px;background-color:#099;color:#fff;display:inline-block;text-align:center;font-size:large;font-family:sans-serif;font-weight:700;padding-top:10px;border:2px solid #999;cursor:pointer;}
