@@ -90,5 +90,16 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     game = new Game();
 
+    startButton.addEventListener("click", Initialise);
+    stopButton.addEventListener("click", Clear);
+
     //window.requestAnimFrame(game.drawBall());
 });
+
+Initialise = function () {
+    game.initialise();
+}
+
+Clear = function () {
+    game.clear();
+}
