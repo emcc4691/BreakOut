@@ -2,13 +2,20 @@
 
 function Game() {
     this.canvas = document.getElementById('canvas');
-    this.ctx = this.canvas.getContext('2d');
+    this.context = this.canvas.getContext('2d');
     this.rowNumber = 5;
     this.blocks = [];
+    this.blockWidth = 38;
+    this.blockHeight = 10;
+    this.ball = new Ball();
 }
 
-function Block() {
-
+function Block(xStart, yStart, width, height) {
+    this.xStart = xStart;
+    this.yStart = yStart;
+    this.width = width;
+    this.height = height;
+    this.fillStyle = "#999";
 }
 
 function Ball() {
@@ -17,40 +24,51 @@ function Ball() {
     this.radius = 3;
     this.dx = 2;
     this.dy = -2;
+    this.fillStyle = "#099";
 }
 
-Game.prototype.drawBlock = function (x, y, width, height) {
-    ctx.beginPath();
-    ctx.rect(x, y, width, height);
-    ctx.fillStyle = "#999";
-    ctx.fill();
-    ctx.closePath();
+Block.prototype.drawBlock = function (context) {
+    context.beginPath();
+    context.rect(this.xStart, this.yStart, this.width, this.height);
+    context.fillStyle = this.fillStyle;
+    context.fill();
+    context.closePath();
 }
 
-Game.prototype.drawBall = function (ctx) {
-    var ctx = this.findContext();
-    ctx.beginPath();
-    ctx.arc(this.xStartBall, this.yStartBall, this.radiusBall, 0, Math.PI * 2);
-    ctx.fillStyle = "#099";
-    ctx.fill();
-    ctx.closePath();
-
-    this.xStartBall += this.dx;
-    this.yStartBall += this.dy;
+Ball.prototype.drawBall = function (context, xStart, yStart) {
+    context.beginPath();
+    context.arc(xStart, yStart, this.radius, 0, Math.PI * 2);
+    context.fillStyle = this.fillStyle;
+    context.fill();
+    context.closePath();
 }
 
-Game.prototype.setUpBlocks = function(xMargin, yMargin, width, height) {
+Game.prototype.createBlocks = function(xMargin, yMargin, width, height) {
     for (var j = 0; j <= this.rowNumber - 1; j++) {
-        var rowHeight = (j + 1) * yMargin + j * height;
+        var yStart = (j + 1) * yMargin + j * height;
         for (var i = 0; i <= 6; i++) {
-            this.drawBlock((i + 1) * xMargin + i * width + (j % 2 == 0 ? 0 : 10), rowHeight, width, height);
+            var xStart = (i + 1) * xMargin + i * width + (j % 2 == 0 ? 0 : 10)
+            var block = new Block(xStart, yStart, this.blockWidth, this.blockHeight);
+            this.blocks.push(block);
         }
     }
 }
 
-Game.prototype.draw = function () {
-    Game.setUpBlocks(3, 2, 38, 10);
-    Game.drawBall();
+Game.prototype.drawBlocks = function () {
+    for (var i = 0; i < this.blocks.length; i++)
+    {
+        this.blocks[i].drawBlock(this.context);
+    }
+}
+
+Game.prototype.initialise = function () {
+    game.createBlocks(3, 2, 38, 10);
+    game.drawBlocks();
+    game.ball.drawBall(game.context, game.ball.xStartPosition, game.ball.yStartPosition);
+}
+
+Game.prototype.clear = function () {
+    game.context.clearRect(0, 0, game.canvas.width, game.canvas.height);
 }
 
 window.requestAnimFrame = (function () {
@@ -67,12 +85,10 @@ window.requestAnimFrame = (function () {
 // Let's play the game
 
 document.addEventListener("DOMContentLoaded", function (event) {
-    var game = new Game();
     var startButton = document.getElementById('start');
     var stopButton = document.getElementById('stop');
 
-    game.setUpBlocks(3, 2, 38, 10);
-    startButton.addEventListener("click", game.draw);
+    game = new Game();
 
     //window.requestAnimFrame(game.drawBall());
 });
