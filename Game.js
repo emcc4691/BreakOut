@@ -40,10 +40,13 @@ Block.prototype.drawBlock = function (context) {
 
 Block.prototype.checkCollisionWithBlock = function (ball) {
 
-    var ballNorth = ball.yCurrentPosition - ball.radius;
-    var ballSouth = ball.yCurrentPosition + ball.radius;
-    var ballWest = ball.xCurrentPosition - ball.radius;
-    var ballEast = ball.xCurrentPosition + ball.radius;
+    var ballX = ball.xCurrentPosition;
+    var ballY = ball.yCurrentPosition;
+    var ballRadius = ball.radius;
+    var ballNorth = ballY - ballRadius;
+    var ballSouth = ballY + ballRadius;
+    var ballWest = ballX - ballRadius;
+    var ballEast = ballX + ballRadius;
        
     var blockLower = this.yStart + this.height;
     var blockUpper = this.yStart;
@@ -51,7 +54,7 @@ Block.prototype.checkCollisionWithBlock = function (ball) {
     var blockRight = this.xStart + this.width;
 
     // check sides
-    if (ballNorth >= blockUpper && ballSouth <= blockLower)
+    if (ballY >= blockUpper && ballY <= blockLower)
     {
         // check left boundary
         if (ballEast >= blockLeft && ballEast <= blockRight) {
@@ -67,7 +70,7 @@ Block.prototype.checkCollisionWithBlock = function (ball) {
     }
 
     // check top and bottom
-    if (ballWest >= blockLeft && ballEast <= blockRight)
+    if (ballX >= blockLeft && ballX <= blockRight)
     {
         // check top
         if (ballSouth >= blockUpper && ballSouth <= blockLower)
