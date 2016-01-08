@@ -186,7 +186,7 @@ Game.prototype.move = function () {
 Game.prototype.start = function () {
     game.move();
     
-    window.requestAnimFrame(game.start)
+    requestId = window.requestAnimFrame(game.start)
 }
 
 window.requestAnimFrame = (function (callback) {
@@ -200,13 +200,21 @@ window.requestAnimFrame = (function (callback) {
         };
 })();
 
+window.cancelAnimFrame = (function () {
+    return window.cancelAnimationFrame || window.mozCancelAnimationFrame;
+})();
+
 Initialise = function () {
     game.initialise();
     game.start();
 }
 
+Stop = function () {
+    window.cancelAnimFrame(requestId);
+}
+
 Clear = function () {
-    // TODO end animation
+    Stop();
     game.clear();
 }
 
