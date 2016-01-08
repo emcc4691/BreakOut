@@ -176,9 +176,7 @@ Game.prototype.clear = function () {
 Game.prototype.move = function () {
     this.clear();
     this.ball.moveBall();
-    // check for collision with wall
     this.ball.checkCollisionWithWall();
-    // check for collision with block
     this.ball.checkCollisionWithBlocks();
     this.draw();
 }
