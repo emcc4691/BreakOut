@@ -206,7 +206,30 @@ window.cancelAnimFrame = (function () {
 
 Initialise = function () {
     game.initialise();
+    pauseButton.addEventListener("click", Pause);
+    Start();
+}
+
+Start = function () {
     game.start();
+}
+
+Pause = function () {
+    Stop();
+    pauseButton.removeEventListener("click", Pause);
+    startButton.setAttribute("disabled", true);
+    stopButton.setAttribute("disabled", true);
+    pauseButton.textContent = "RESTART";
+    pauseButton.addEventListener("click", Restart);
+}
+
+Restart = function () {
+    pauseButton.removeEventListener("click", Restart);
+    startButton.removeAttribute("disabled")
+    stopButton.removeAttribute("disabled")
+    pauseButton.textContent = "PAUSE";
+    Start();
+    pauseButton.addEventListener("click", Pause);
 }
 
 Stop = function () {
