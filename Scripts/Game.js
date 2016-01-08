@@ -1,4 +1,5 @@
-﻿/* Initialise */
+﻿/// <reference path="Ball.js" />
+/* Initialise */
 
 function Game() {
     this.canvas = document.getElementById('canvas');
@@ -7,8 +8,8 @@ function Game() {
     this.blocks = [];
     this.blockWidth = 38;
     this.blockHeight = 10;
-    this.ball = new Ball();
-    this.paddle = new Paddle();
+    this.ball = new Ball(this.canvas.width, this.canvas.height);
+    this.paddle = new Paddle(this.canvas.width, this.canvas.height);
 }
 
 function Block(xStart, yStart, width, height) {
@@ -19,25 +20,13 @@ function Block(xStart, yStart, width, height) {
     this.fillStyle = "#999";
 }
 
-function Ball() {
-    this.xStartPosition = 150;
-    this.yStartPosition = 140;
-    this.xCurrentPosition = this.xStartPosition;
-    this.yCurrentPosition = this.yStartPosition;
-    this.speed = 0.5;
-    this.radius = 3;
-    this.dx = this.speed * 3;
-    this.dy = -this.speed;
-    this.fillStyle = "#099";
-}
-
-function Paddle() {
-    this.height = 10;
-    this.width = 100;
-    this.yPosition = 200;
-    this.xStartPostion = 200;
+function Paddle(canvasWidth, canvasHeight) {
+    this.height = 3;
+    this.width = 50;
+    this.yPosition = canvasHeight * 0.9;
+    this.xStartPostion = (canvasWidth / 2 - this.width / 2);
     this.xPosition = this.xStartPostion;
-    this.fillStyle = "#000";
+    this.fillStyle = "#444";
 }
 
 Paddle.prototype.drawPaddle = function (context) {
@@ -106,57 +95,6 @@ Block.prototype.checkCollisionWithBlock = function (ball) {
 
 }
 
-Ball.prototype.drawBall = function (context) {
-    context.beginPath();
-    context.arc(this.xCurrentPosition, this.yCurrentPosition, this.radius, 0, Math.PI * 2);
-    context.fillStyle = this.fillStyle;
-    context.fill();
-    context.closePath();
-}
-
-Ball.prototype.moveBall = function () {
-    this.xCurrentPosition += this.dx;
-    this.yCurrentPosition += this.dy;
-}
-
-Ball.prototype.checkCollisionWithWall = function() {
-    
-    var width = game.context.canvas.width;
-    var height = game.context.canvas.height;
-
-    // check left boundary
-    if (this.xCurrentPosition - this.radius <= 0)
-        this.changeDirection(true, false);
-
-    // check right boundary
-    if (this.xCurrentPosition + this.radius >= width)
-        this.changeDirection(true, false);
-
-    // check top boundary
-    if (this.yCurrentPosition - this.radius <= 0)
-        this.changeDirection(false, true);
-
-    // check bottom boundary
-    if (this.yCurrentPosition + this.radius >= height)
-        this.changeDirection(false, true);
-}
-
-Ball.prototype.checkCollisionWithBlocks = function () {
-    for(var i = 0; i < game.blocks.length; i++)
-    {
-        var block = game.blocks[i];
-        block.checkCollisionWithBlock(this);
-    }
-}
-
-Ball.prototype.changeDirection = function (changeX, changeY) {
-    if (changeX == true)
-        this.dx = -this.dx;
-    
-    if (changeY == true)
-        this.dy = -this.dy;
-}
-
 Game.prototype.createBlocks = function(xMargin, yMargin, width, height) {
     for (var j = 0; j <= this.rowNumber - 1; j++) {
         var yStart = (j + 1) * yMargin + j * height;
@@ -185,6 +123,7 @@ Game.prototype.initialise = function () {
 Game.prototype.draw = function () {
     game.drawBlocks()
     game.ball.drawBall(game.context);
+    game.paddle.drawPaddle(game.context);
 }
 
 Game.prototype.clear = function () {
@@ -223,6 +162,7 @@ window.cancelAnimFrame = (function () {
 Initialise = function () {
     game.initialise();
     pauseButton.addEventListener("click", Pause);
+    startButton.removeEventListener("click", Initialise);
     Start();
 }
 
@@ -255,6 +195,7 @@ Stop = function () {
 Clear = function () {
     Stop();
     game.clear();
+    startButton.addEventListener("click", Initialise);
 }
 
 document.addEventListener("DOMContentLoaded", function (event) {
