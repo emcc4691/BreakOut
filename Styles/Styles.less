@@ -24,8 +24,8 @@ body {
         margin: auto;
     }
 
-    .button {
-        height: 30px;
+    button {
+        height: 45px;
         width: 100px;
         background-color: @ball-turquoise;
         color: white;
@@ -34,8 +34,13 @@ body {
         font-size: large;
         font-family: sans-serif;
         font-weight: 700;
-        padding-top: 10px;
         border: 2px solid @block-grey;
         cursor: pointer;
+    }
+
+    button:disabled {
+        cursor: auto;
+        background-color: @block-grey;
+        color: @background-grey;
     }
 }

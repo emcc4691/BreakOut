@@ -14,8 +14,8 @@ body .button-row {
   width: 20%;
   margin: auto;
 }
-body .button {
-  height: 30px;
+body button {
+  height: 45px;
   width: 100px;
   background-color: #099;
   color: white;
@@ -24,7 +24,11 @@ body .button {
   font-size: large;
   font-family: sans-serif;
   font-weight: 700;
-  padding-top: 10px;
   border: 2px solid #999;
   cursor: pointer;
+}
+body button:disabled {
+  cursor: auto;
+  background-color: #999;
+  color: #eee;
 }
