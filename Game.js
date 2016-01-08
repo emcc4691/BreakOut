@@ -8,6 +8,7 @@ function Game() {
     this.blockWidth = 38;
     this.blockHeight = 10;
     this.ball = new Ball();
+    this.paddle = new Paddle();
 }
 
 function Block(xStart, yStart, width, height) {
@@ -28,6 +29,23 @@ function Ball() {
     this.dx = this.speed * 3;
     this.dy = -this.speed;
     this.fillStyle = "#099";
+}
+
+function Paddle() {
+    this.height = 10;
+    this.width = 100;
+    this.yPosition = 200;
+    this.xStartPostion = 200;
+    this.xPosition = this.xStartPostion;
+    this.fillStyle = "#000";
+}
+
+Paddle.prototype.drawPaddle = function (context) {
+    context.beginPath();
+    context.rect(this.xStartPostion, this.yPosition, this.width, this.height);
+    context.fillStyle = this.fillStyle;
+    context.fill();
+    context.closePath();
 }
 
 Block.prototype.drawBlock = function (context) {
