@@ -219,9 +219,9 @@ Clear = function () {
 }
 
 document.addEventListener("DOMContentLoaded", function (event) {
-    var startButton = document.getElementById('start');
-    var pauseButton = document.getElementById('pause');
-    var stopButton = document.getElementById('stop');
+    startButton = document.getElementById('start');
+    pauseButton = document.getElementById('pause');
+    stopButton = document.getElementById('stop');
 
     game = new Game();
 
