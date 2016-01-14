@@ -2,7 +2,7 @@
     this.speed = 0.5;
     this.radius = 3;
     this.xStartPosition = 150;
-    this.yStartPosition = canvasHeight * 0.9 - this.radius;
+    this.yStartPosition = canvasHeight * 0.95 - this.radius;
     this.xCurrentPosition = this.xStartPosition;
     this.yCurrentPosition = this.yStartPosition;
     this.dx = this.speed * 3;
@@ -27,28 +27,70 @@ Ball.prototype.checkCollisionWithWall = function () {
 
     var width = game.context.canvas.width;
     var height = game.context.canvas.height;
+    var ballX = this.xCurrentPosition;
+    var ballY = this.yCurrentPosition;
+    var ballRadius = this.radius;
+    var ballNorth = ballY - ballRadius;
+    var ballSouth = ballY + ballRadius;
+    var ballWest = ballX - ballRadius;
+    var ballEast = ballX + ballRadius;
 
     // check left boundary
-    if (this.xCurrentPosition - this.radius <= 0)
+    if (ballWest - this.radius <= 0)
         this.changeDirection(true, false);
 
     // check right boundary
-    if (this.xCurrentPosition + this.radius >= width)
+    if (ballEast >= width)
         this.changeDirection(true, false);
 
     // check top boundary
-    if (this.yCurrentPosition - this.radius <= 0)
+    if (ballNorth <= 0)
         this.changeDirection(false, true);
 
     // check bottom boundary
-    if (this.yCurrentPosition + this.radius >= height)
+    if (ballSouth >= height)
         this.changeDirection(false, true);
+}
+
+Ball.prototype.checkBottomBoundary = function () {
+    var ballSouth = this.yCurrentPosition + this.radius;
+    if (ballSouth >= height) game.GameOver;
 }
 
 Ball.prototype.checkCollisionWithBlocks = function () {
     for (var i = 0; i < game.blocks.length; i++) {
         var block = game.blocks[i];
         block.checkCollisionWithBlock(this);
+    }
+}
+
+Ball.prototype.checkCollisionWithPaddle = function (paddle) {
+    var ballX = this.xCurrentPosition;
+    var ballY = this.yCurrentPosition;
+    var ballRadius = this.radius;
+    var ballSouth = ballY + ballRadius;
+    var ballWest = ballX - ballRadius;
+    var ballEast = ballX + ballRadius;
+
+    var paddleLeft = paddle.xPosition;
+    var paddleRight = paddle.xPosition + paddle.width;
+    var paddleTop = paddle.yPosition;
+    var paddleBottom = paddle.yPosition + paddle.height;
+
+    // check top of paddle
+    if (ballX >= paddleLeft && ballX <= paddleRight && ballSouth >= paddleTop) {
+        this.changeDirection(false, true);
+    }
+
+    // check sides
+    if(ballY >= paddleTop && ballY <= paddleBottom)
+    {
+        if (ballWest >= paddleLeft && ballWest <= paddleRight) {
+            this.changeDirection(true, false);
+        }
+        else if (ballEast >= paddleLeft && ballEast <= paddleRight) {
+            this.changeDirection(true, false);
+        }
     }
 }
 
