@@ -2,6 +2,7 @@
     this.canvas = document.getElementById('canvas');
     this.context = this.canvas.getContext('2d');
     this.rowNumber = 5;
+    this.isPlaying = false;
     this.blocks = [];
     this.blockWidth = 38;
     this.blockHeight = 10;
@@ -9,7 +10,7 @@
     this.paddle = new Paddle(this.canvas.width, this.canvas.height);
 }
 
-Game.prototype.createBlocks = function(xMargin, yMargin, width, height) {
+Game.prototype.createBlocks = function (xMargin, yMargin, width, height) {
     for (var j = 0; j <= this.rowNumber - 1; j++) {
         var yStart = (j + 1) * yMargin + j * height;
         for (var i = 0; i <= 6; i++) {
@@ -21,10 +22,15 @@ Game.prototype.createBlocks = function(xMargin, yMargin, width, height) {
 }
 
 Game.prototype.drawBlocks = function () {
-    for (var i = 0; i < this.blocks.length; i++)
-    {
+    for (var i = 0; i < this.blocks.length; i++) {
         this.blocks[i].drawBlock(this.context);
     }
+}
+
+Game.prototype.drawGameOver = function () {
+    this.context.font = "bold 30px Arial";
+    this.context.textAlign = "center";
+    this.context.fillText("GAME OVER", this.canvas.width / 2, this.canvas.height * 0.7);
 }
 
 Game.prototype.initialise = function () {
@@ -32,6 +38,7 @@ Game.prototype.initialise = function () {
     game.ball.yCurrentPosition = game.ball.yStartPosition;
     game.createBlocks(3, 2, 38, 10);
     game.draw();
+    requestId = 1;
 }
 
 Game.prototype.draw = function () {
@@ -52,15 +59,37 @@ Game.prototype.move = function () {
     this.ball.checkCollisionWithBlocks();
     this.ball.checkCollisionWithPaddle(this.paddle);
     this.draw();
+    var gameOver = this.ball.checkBottomBoundary();
+
+    if (gameOver) {
+        TriggerGameOver();
+    }
+
 }
 
 Game.prototype.start = function () {
+    game.isPlaying = true;
+    game.animationLoop();
+}
+
+Game.prototype.animationLoop = function () {
+    if (!game.isPlaying)
+        return;
+
     game.move();
-    
-    requestId = window.requestAnimFrame(game.start)
+
+    requestId = window.requestAnimFrame(game.animationLoop);
 }
 
-Game.prototype.gameOver = function () {
-    alert("GAME OVER");
+TriggerGameOver = function () {
+    var event = new Event("GameOver");
+    document.dispatchEvent(event);
 }
 
+GameOver = function () {
+    window.cancelAnimFrame(requestId);
+    game.isPlaying = false;
+    game.ball.fillStyle = "#f00";
+    game.draw();
+    game.drawGameOver();
+}

@@ -54,7 +54,9 @@ Ball.prototype.checkCollisionWithWall = function () {
 
 Ball.prototype.checkBottomBoundary = function () {
     var ballSouth = this.yCurrentPosition + this.radius;
-    if (ballSouth >= height) game.GameOver;
+    if (ballSouth >= game.canvas.height)
+        return true;
+    return false;
 }
 
 Ball.prototype.checkCollisionWithBlocks = function () {

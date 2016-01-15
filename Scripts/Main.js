@@ -25,7 +25,7 @@ Start = function () {
 }
 
 Pause = function () {
-    Stop();
+    StopFrame();
     pauseButton.removeEventListener("click", Pause);
     startButton.setAttribute("disabled", true);
     stopButton.setAttribute("disabled", true);
@@ -42,12 +42,12 @@ Restart = function () {
     pauseButton.addEventListener("click", Pause);
 }
 
-Stop = function () {
+StopFrame = function () {
     window.cancelAnimFrame(requestId);
 }
 
 Clear = function () {
-    Stop();
+    StopFrame();
     game.clear();
     startButton.addEventListener("click", Initialise);
 }
@@ -64,5 +64,6 @@ LoadButtons = function () {
 }
 
 document.addEventListener("DOMContentLoaded", LoadButtons);
+document.addEventListener("GameOver", GameOver);
 
 document.onkeydown = MovePaddle;
