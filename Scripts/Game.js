@@ -8,6 +8,7 @@
     this.blockHeight = 10;
     this.ball = new Ball(this.canvas.width, this.canvas.height);
     this.paddle = new Paddle(this.canvas.width, this.canvas.height);
+    this.playBar = new PlayBar(this.canvas.width, this.canvas.height);
 }
 
 Game.prototype.createBlocks = function (xMargin, yMargin, width, height) {
@@ -38,7 +39,6 @@ Game.prototype.initialise = function () {
     game.ball.yCurrentPosition = game.ball.yStartPosition;
     game.createBlocks(3, 2, 38, 10);
     game.draw();
-    requestId = 1;
 }
 
 Game.prototype.draw = function () {
@@ -89,7 +89,6 @@ TriggerGameOver = function () {
 GameOver = function () {
     window.cancelAnimFrame(requestId);
     game.isPlaying = false;
-    game.ball.fillStyle = "#f00";
     game.draw();
     game.drawGameOver();
 }
