@@ -5,47 +5,23 @@
 
 
 body {
-    * {
-        padding: 0;
-        margin: 0;
+    * { padding: 0; margin: 0; }
+
+    canvas { background: @background-grey; display: block; margin: 5% auto; width: 1000px; height: 30%; border: 3px solid @border-turquoise; }
+
+    .start-button { width: 30%; background: white; border: solid 4px #ccc; text-align: center; padding: 3% 0; font-size: 35px; margin: auto; margin-top: -24%; position: relative;
+        div { color: @ball-turquoise; font-weight: 900; }
     }
 
-    canvas {
-        background: @background-grey;
-        display: block;
-        margin: 5% auto;
-        width: 1000px;
-        height: 500px;
-        border: 3px solid @border-turquoise;
+    .start-button:hover { border-color: @ball-turquoise;
+        div { cursor: pointer; color: #0bb; }
     }
 
-    .button-row {
-        width: 9%;
-        margin: auto;
-    }
+    .button-row { width: 9%; margin: 15% auto; position: relative; }
 
-    button {
-        height: 75px;
-        width: 75px;
-        background-color: @ball-turquoise;
-        color: white;
-        display: inline-block;
-        text-align: center;
-        font-size: large;
-        font-family: sans-serif;
-        font-weight: 700;
-        border: 2px solid @block-grey;
-        cursor: pointer;
-    }
+    button { height: 75px; width: 75px; background-color: @ball-turquoise; color: white; display: inline-block; text-align: center; font-size: large; font-family: sans-serif; font-weight: 700; border: 2px solid @block-grey; cursor: pointer; }
 
-    button:disabled {
-        cursor: auto;
-        background-color: @block-grey;
-        color: @background-grey;
-    }
+    button:disabled { cursor: auto; background-color: @block-grey; color: @background-grey; }
 
-    img {
-        height: 60px;
-        vertical-align: middle;
-    }
+    img { height: 60px; vertical-align: middle; }
 }

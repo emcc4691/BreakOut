@@ -29,7 +29,7 @@ Game.prototype.drawBlocks = function () {
 }
 
 Game.prototype.drawGameOver = function () {
-    this.context.font = "bold 30px Arial";
+    this.context.font = "bold 30px Verdana";
     this.context.textAlign = "center";
     this.context.fillText("GAME OVER", this.canvas.width / 2, this.canvas.height * 0.7);
 }
@@ -39,6 +39,7 @@ Game.prototype.initialise = function () {
     game.ball.yCurrentPosition = game.ball.yStartPosition;
     game.createBlocks(3, 2, 38, 10);
     game.draw();
+    game.playBar.drawPlayBar(game.context);
 }
 
 Game.prototype.draw = function () {

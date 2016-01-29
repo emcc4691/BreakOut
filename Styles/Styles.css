@@ -7,12 +7,35 @@ body canvas {
   display: block;
   margin: 5% auto;
   width: 1000px;
-  height: 500px;
+  height: 30%;
   border: 3px solid #acc;
+}
+body .start-button {
+  width: 30%;
+  background: white;
+  border: solid 4px #ccc;
+  text-align: center;
+  padding: 3% 0;
+  font-size: 35px;
+  margin: auto;
+  margin-top: -24%;
+  position: relative;
+}
+body .start-button div {
+  color: #099;
+  font-weight: 900;
+}
+body .start-button:hover {
+  border-color: #099;
+}
+body .start-button:hover div {
+  cursor: pointer;
+  color: #0bb;
 }
 body .button-row {
   width: 9%;
-  margin: auto;
+  margin: 15% auto;
+  position: relative;
 }
 body button {
   height: 75px;

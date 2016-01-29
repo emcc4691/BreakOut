@@ -16,23 +16,24 @@ window.cancelAnimFrame = (function () {
 Initialise = function () {
     game.initialise();
     startButton.removeEventListener("click", Initialise);
-    Start();
+    //Start();
     //startButton.removeAttribute("disabled")
     //stopButton.removeAttribute("disabled")
 }
 
 Start = function () {
     game.start();
-    startButton.removeEventListener("click", Start);
-    startButton.addEventListener("click", Pause);
+    startButton.removeEventListener("click", Initialise);
+    pauseButton.removeEventListener("click", Start);
+    pauseButton.addEventListener("click", Pause);
     startIcon.src = "Images/Pause.png"
 }
 
 Pause = function () {
     StopFrame();
 
-    startButton.removeEventListener("click", Pause);
-    startButton.addEventListener("click", Start);
+    pauseButton.removeEventListener("click", Pause);
+    pauseButton.addEventListener("click", Start);
     startIcon.src = "Images/Play.png"
 }
 
@@ -48,13 +49,16 @@ Clear = function () {
 
 LoadButtons = function () {
     startButton = document.getElementById('start');
+    pauseButton = document.getElementById('pause');
     newGameButton = document.getElementById('newGame');
     startIcon = document.getElementById('startIcon');
     newGameIcon = document.getElementById('newGameIcon');
 
     game = new Game();
+    //game.playBar.drawPlayBar(game.context);
 
     startButton.addEventListener("click", Initialise);
+    pauseButton.addEventListener("click", Pause);
     newGameButton.addEventListener("click", Clear);
 }
 
