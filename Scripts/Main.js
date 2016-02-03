@@ -15,54 +15,50 @@ window.cancelAnimFrame = (function () {
 
 Initialise = function () {
     game.initialise();
-    startButton.removeEventListener("click", Initialise);
-    //Start();
-    //startButton.removeAttribute("disabled")
-    //stopButton.removeAttribute("disabled")
+    document.getElementById("canvas").addEventListener("click", CanvasClicked);
+    game.isPlaying = true;
 }
 
 Start = function () {
     game.start();
-    startButton.removeEventListener("click", Initialise);
-    pauseButton.removeEventListener("click", Start);
-    pauseButton.addEventListener("click", Pause);
-    startIcon.src = "Images/Pause.png"
 }
 
 Pause = function () {
     StopFrame();
-
-    pauseButton.removeEventListener("click", Pause);
-    pauseButton.addEventListener("click", Start);
-    startIcon.src = "Images/Play.png"
 }
 
 StopFrame = function () {
+    game.isMoving = false;
     window.cancelAnimFrame(requestId);
 }
 
 Clear = function () {
     StopFrame();
     game.clear();
-    startButton.addEventListener("click", Initialise);
 }
 
-LoadButtons = function () {
-    startButton = document.getElementById('start');
-    pauseButton = document.getElementById('pause');
-    newGameButton = document.getElementById('newGame');
-    startIcon = document.getElementById('startIcon');
-    newGameIcon = document.getElementById('newGameIcon');
 
-    game = new Game();
-    //game.playBar.drawPlayBar(game.context);
-
-    startButton.addEventListener("click", Initialise);
-    pauseButton.addEventListener("click", Pause);
-    newGameButton.addEventListener("click", Clear);
+TriggerGameOver = function () {
+    var event = new Event("GameOver");
+    document.dispatchEvent(event);
 }
 
-document.addEventListener("DOMContentLoaded", LoadButtons);
+GameOver = function () {
+    window.cancelAnimFrame(requestId);
+    game.isPlaying = false;
+    game.draw();
+
+}
+
+CanvasClicked = function () {
+    if (!game.isPlaying)
+        return;
+    else if (game.isMoving)
+        Pause();
+    else
+        Start();
+}
+
+document.addEventListener("DOMContentLoaded", function (event) { game = new Game(); });
 document.addEventListener("GameOver", GameOver);
-
 document.onkeydown = MovePaddle;
