@@ -28,7 +28,16 @@ Game.prototype.drawBlocks = function () {
     }
 }
 
+Game.prototype.drawPlayIcon = function () {
+    game.context.drawImage(playIcon, game.canvas.width / 2 - 20, game.canvas.height / 2 - 20, 40, 40);
+}
+
+Game.prototype.drawRestartIcon = function () {
+    game.context.drawImage(restartIcon, game.canvas.width / 2 - 20, game.canvas.height / 2 - 20, 40, 40);
+}
+
 Game.prototype.initialise = function () {
+    game.clear();
     game.ball.xCurrentPosition = game.ball.xStartPosition;
     game.ball.yCurrentPosition = game.ball.yStartPosition;
     game.createBlocks(3, 2, 38, 10);
@@ -53,7 +62,7 @@ Game.prototype.move = function () {
     this.ball.checkCollisionWithBlocks();
     this.ball.checkCollisionWithPaddle(this.paddle);
     this.draw();
-    var gameOver = this.ball.checkBottomBoundary();
+    gameOver = this.ball.checkBottomBoundary();
 
     if (gameOver) {
         TriggerGameOver();
