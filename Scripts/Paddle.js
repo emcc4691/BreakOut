@@ -19,11 +19,14 @@ Paddle.prototype.drawPaddle = function (context) {
 }
 
 Paddle.prototype.move = function () {
-    if (this.xPosition < Magnitude(this.velocity)){
+    if (!game.isMoving)
+        return;
+
+    if (this.velocity < 0 && this.xPosition < Magnitude(this.velocity)) {
         return;
     }
 
-    if (this.xPosition + this.width > game.canvas.width - Magnitude(this.velocity)) {
+    if (this.velocity > 0 && this.xPosition + this.width > game.canvas.width - Magnitude(this.velocity)) {
         return;
     }
 
@@ -35,7 +38,7 @@ Paddle.prototype.movePaddleLeft = function () {
     var paddle = game.paddle;
 
     if (paddle.velocity > 0 || paddle.framesWithoutMovement > 10) paddle.velocity = 0;
-    
+
     paddle.velocity -= paddle.rateOfChange;
 
     paddle.move();
@@ -44,7 +47,7 @@ Paddle.prototype.movePaddleLeft = function () {
 Paddle.prototype.movePaddleRight = function () {
     var paddle = game.paddle;
 
-    if (paddle.velocity < 0 || paddle.framesWithoutMovement > 10) paddle.velocity = 0;
+    if (paddle.velocity < 0 || paddle.framesWithoutMovement > 10 || !game.isMoving) paddle.velocity = 0;
 
     paddle.velocity += paddle.rateOfChange;
 
