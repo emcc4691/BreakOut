@@ -40,6 +40,7 @@ Game.prototype.initialise = function () {
     game.clear();
     game.ball.xCurrentPosition = game.ball.xStartPosition;
     game.ball.yCurrentPosition = game.ball.yStartPosition;
+    game.paddle.xPosition = game.paddle.xStartPosition;
     game.createBlocks(3, 2, 38, 10);
     game.draw();
 }
