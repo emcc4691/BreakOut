@@ -90,7 +90,9 @@ CanvasClicked = function () {
         Initialise();
     else if (!game.isPlaying)
         return;
-    else if (game.isMoving)
+    else if (game.isMoving || isCountingDown)
+        Pause();
+    else if (isCountingDown)
         Pause();
     else
         Start();
