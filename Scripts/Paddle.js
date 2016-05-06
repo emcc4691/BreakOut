@@ -6,7 +6,7 @@
     this.xPosition = this.xStartPosition;
     this.fillStyle = "#444";
     this.velocity = 0;
-    this.rateOfChange = 0.3;
+    this.rateOfChange = 0.7;
     this.framesWithoutMovement = 0;
 }
 
