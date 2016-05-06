@@ -1,4 +1,6 @@
-﻿window.requestAnimFrame = (function (callback) {
+﻿iconSize = 40;
+
+window.requestAnimFrame = (function (callback) {
     return window.requestAnimationFrame ||
         window.webkitRequestAnimationFrame ||
         window.mozRequestAnimationFrame ||
