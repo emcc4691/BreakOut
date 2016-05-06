@@ -81,7 +81,7 @@ CountDown = function () {
     var sec = 4;
     gameOver = false;
     DrawCountDown("Ready?");
-    var countDownRequestID = window.setInterval(function () {
+    countDownRequestID = window.setInterval(function () {
         game.clear();
         if (sec === 0) {
             game.draw();
