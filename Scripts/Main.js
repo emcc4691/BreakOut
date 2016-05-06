@@ -161,3 +161,9 @@ Load = function (event) {
 document.addEventListener("DOMContentLoaded", Load);
 document.addEventListener("GameOver", GameOver);
 document.onkeydown = MovePaddle;
+document.onkeypress = function (e) {
+    if (e.keyCode === 0 || e.keyCode === 32) {
+        e.preventDefault();
+        CanvasClicked();
+    }
+}
