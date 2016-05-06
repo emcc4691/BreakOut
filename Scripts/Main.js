@@ -33,6 +33,8 @@ Pause = function () {
 }
 
 StopFrame = function () {
+    if (!game.isPlaying) return;
+
     game.isMoving = false;
     window.cancelAnimFrame(requestId);
 }
