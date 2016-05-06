@@ -29,6 +29,7 @@ Start = function () {
 
 Pause = function () {
     StopFrame();
+    DrawPauseIcon();
 }
 
 StopFrame = function () {
@@ -131,6 +132,13 @@ DrawPlayIcon = function () {
     if (playIcon.complete) { game.drawPlayIcon(); }
     else {
         playIcon.onload = game.drawPlayIcon;
+    }
+}
+
+DrawPauseIcon = function () {
+    if (pauseIcon.complete) { game.drawPauseIcon(); }
+    else {
+        pauseIcon.onload = game.drawPauseIcon;
     }
 }
 
