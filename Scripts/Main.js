@@ -79,6 +79,7 @@ DrawGameWon = function () {
 
 CountDown = function () {
     var sec = 4;
+    gameOver = false;
     DrawCountDown("Ready?");
     var countDownRequestID = window.setInterval(function () {
         game.clear();
