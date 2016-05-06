@@ -1,6 +1,6 @@
-﻿function Ball(canvasWidth, canvasHeight) {
+﻿function Ball(canvasWidth, canvasHeight, difficulty) {
     this.speed = 0.5;
-    this.radius = 3;
+    this.radius = GetBallRadius(difficulty);
     this.xStartPosition = 150;
     this.yStartPosition = canvasHeight * 0.95 - this.radius;
     this.xCurrentPosition = this.xStartPosition;
@@ -85,8 +85,7 @@ Ball.prototype.checkCollisionWithPaddle = function (paddle) {
     }
 
     // check sides
-    if(ballY >= paddleTop && ballY <= paddleBottom)
-    {
+    if (ballY >= paddleTop && ballY <= paddleBottom) {
         if (ballWest >= paddleLeft && ballWest <= paddleRight) {
             this.changeDirection(true, false);
         }

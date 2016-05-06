@@ -7,6 +7,7 @@
 </head>
 <body>
     <script src="Scripts/Helpers.js"></script>
+    <script src="Scripts/Difficulty.js"></script>
     <script src="Scripts/Ball.js"></script>
     <script src="Scripts/Block.js"></script>
     <script src="Scripts/Paddle.js"></script>
@@ -19,5 +20,10 @@
         <img id="restartIcon" src="Images/Restart.png" />
     </div>
     <canvas id="canvas"></canvas>
+    <ul class="difficulty-buttons">
+        <li class="button active" id="easy"><a>EASY</a></li>
+        <li class="button" id="normal"><a>NORMAL</a></li>
+        <li class="button" id="hard" onclick="SelectDifficult"><a>HARD</a></li>
+    </ul>
 </body>
 </html>

@@ -1,23 +1,29 @@
-﻿function Game() {
+﻿function Game(difficulty) {
     this.canvas = document.getElementById('canvas');
     this.context = this.canvas.getContext('2d');
-    this.rowNumber = 5;
+    this.rowNumber = GetRowNumber(difficulty);
     this.isMoving = false;
     this.isPlaying = false;
     this.blocks = [];
-    this.blockWidth = 38;
-    this.blockHeight = 10;
-    this.ball = new Ball(this.canvas.width, this.canvas.height);
-    this.paddle = new Paddle(this.canvas.width, this.canvas.height);
+    this.blockWidth = GetBlockWidth(difficulty);
+    this.blockHeight = GetBlockHeight(difficulty);
+    this.ball = new Ball(this.canvas.width, this.canvas.height, difficulty);
+    this.paddle = new Paddle(this.canvas.width, this.canvas.height, difficulty);
+    this.numberOfBlocksInARow = GetNumberOfBlocks(difficulty);
+    this.xMargin = 3;
+    this.yMargin = 2;
+    this.blockDisplacement = GetBlockDisplacement(difficulty);
 }
 
-Game.prototype.createBlocks = function (xMargin, yMargin, width, height) {
+Game.prototype.createBlocks = function () {
     for (var j = 0; j <= this.rowNumber - 1; j++) {
-        var yStart = (j + 1) * yMargin + j * height;
-        for (var i = 0; i <= 6; i++) {
-            var xStart = (i + 1) * xMargin + i * width + (j % 2 == 0 ? 0 : 10)
-            var block = new Block(xStart, yStart, this.blockWidth, this.blockHeight);
-            this.blocks.push(block);
+        var yStart = (j + 1) * this.yMargin + j * this.blockHeight;
+        for (var i = 0; i <= this.numberOfBlocksInARow - 1; i++) {
+            var xStart = (i + 1) * this.xMargin + i * this.blockWidth + (j % 2 == 0 ? 0 : this.blockDisplacement)
+            if (xStart + this.blockWidth < this.canvas.width) {
+                var block = new Block(xStart, yStart, this.blockWidth, this.blockHeight);
+                this.blocks.push(block);
+            }
         }
     }
 }
@@ -29,11 +35,15 @@ Game.prototype.drawBlocks = function () {
 }
 
 Game.prototype.drawPlayIcon = function () {
-    game.context.drawImage(playIcon, game.canvas.width / 2 - 20, game.canvas.height / 2 - 20, 40, 40);
+    game.context.drawImage(playIcon, game.canvas.width / 2 - iconSize / 2, game.canvas.height / 2 - iconSize / 2, iconSize, iconSize);
+}
+
+Game.prototype.drawPauseIcon = function () {
+    game.context.drawImage(pauseIcon, game.canvas.width / 2 - iconSize / 2, game.canvas.height / 2 - iconSize / 2, iconSize, iconSize);
 }
 
 Game.prototype.drawRestartIcon = function () {
-    game.context.drawImage(restartIcon, game.canvas.width / 2 - 20, game.canvas.height / 2 - 20, 40, 40);
+    game.context.drawImage(restartIcon, game.canvas.width / 2 - iconSize / 2, game.canvas.height / 2 - iconSize / 2, iconSize, iconSize);
 }
 
 Game.prototype.initialise = function () {
@@ -41,7 +51,7 @@ Game.prototype.initialise = function () {
     game.ball.xCurrentPosition = game.ball.xStartPosition;
     game.ball.yCurrentPosition = game.ball.yStartPosition;
     game.paddle.xPosition = game.paddle.xStartPosition;
-    game.createBlocks(3, 2, 38, 10);
+    game.createBlocks();
     game.draw();
 }
 

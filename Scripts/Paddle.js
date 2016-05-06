@@ -1,6 +1,6 @@
-﻿function Paddle(canvasWidth, canvasHeight) {
+﻿function Paddle(canvasWidth, canvasHeight, difficulty) {
     this.height = 3;
-    this.width = 50;
+    this.width = GetPaddleWidth(difficulty);
     this.yPosition = canvasHeight * 0.95;
     this.xStartPosition = (canvasWidth / 2 - this.width / 2);
     this.xPosition = this.xStartPosition;
