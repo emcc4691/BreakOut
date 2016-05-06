@@ -34,6 +34,10 @@ Game.prototype.drawBlocks = function () {
     }
 }
 
+Game.prototype.countRemainingBlocks = function () {
+    return this.blocks.length;
+}
+
 Game.prototype.drawPlayIcon = function () {
     game.context.drawImage(playIcon, game.canvas.width / 2 - iconSize / 2, game.canvas.height / 2 - iconSize / 2, iconSize, iconSize);
 }
@@ -77,6 +81,11 @@ Game.prototype.move = function () {
 
     if (gameOver) {
         TriggerGameOver();
+    }
+
+    if (game.countRemainingBlocks() === 0) {
+        gameOver = true;
+        TriggerGameWon();
     }
 
 }

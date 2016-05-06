@@ -55,6 +55,26 @@ GameOver = function () {
     DrawRestartIcon();
 }
 
+TriggerGameWon = function () {
+    var event = new Event("GameWon");
+    document.dispatchEvent(event);
+}
+
+GameWon = function () {
+    window.cancelAnimFrame(requestId);
+    game.isPlaying = false;
+    game.draw();
+    DrawRestartIcon();
+}
+
+DrawGameWon = function () {
+    var ctx = game.context;
+    ctx.font = "30px Arial";
+    ctx.fillStyle = "white";
+    ctx.textAlign = "center";
+    ctx.fillText('WIN!!', game.canvas.width / 2, game.canvas.height / 2);
+}
+
 CountDown = function () {
     var sec = 4;
     DrawCountDown("Ready?");
