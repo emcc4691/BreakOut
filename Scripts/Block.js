@@ -15,7 +15,6 @@ Block.prototype.drawBlock = function (context) {
 }
 
 Block.prototype.checkCollisionWithBlock = function (ball) {
-
     var ballX = ball.xCurrentPosition;
     var ballY = ball.yCurrentPosition;
     var ballRadius = ball.radius;
@@ -33,14 +32,18 @@ Block.prototype.checkCollisionWithBlock = function (ball) {
     if (ballY >= blockUpper && ballY <= blockLower) {
         // check left boundary
         if (ballEast >= blockLeft && ballEast <= blockRight) {
-            ball.changeDirection(true, false);
-            game.blocks.splice(game.blocks.indexOf(this), 1);
+            if (ball.dx > 0) {
+                ball.changeDirection(true, false);
+                game.blocks.splice(game.blocks.indexOf(this), 1);
+            }
         }
 
         // check right boundary
         if (ballWest >= blockLeft && ballWest <= blockRight) {
-            ball.changeDirection(true, false);
-            game.blocks.splice(game.blocks.indexOf(this), 1);
+            if (ball.dx < 0) {
+                ball.changeDirection(true, false);
+                game.blocks.splice(game.blocks.indexOf(this), 1);
+            }
         }
     }
 
@@ -48,14 +51,18 @@ Block.prototype.checkCollisionWithBlock = function (ball) {
     if (ballX >= blockLeft && ballX <= blockRight) {
         // check top
         if (ballSouth >= blockUpper && ballSouth <= blockLower) {
-            ball.changeDirection(false, true);
-            game.blocks.splice(game.blocks.indexOf(this), 1);
+            if (ball.dy > 0) {
+                ball.changeDirection(false, true);
+                game.blocks.splice(game.blocks.indexOf(this), 1);
+            }
         }
 
         // check bottom
         if (ballNorth >= blockUpper && ballNorth <= blockLower) {
-            ball.changeDirection(false, true);
-            game.blocks.splice(game.blocks.indexOf(this), 1);
+            if (ball.dy < 0) {
+                ball.changeDirection(false, true);
+                game.blocks.splice(game.blocks.indexOf(this), 1);
+            }
         }
     }
 
