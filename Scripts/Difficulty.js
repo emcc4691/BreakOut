@@ -73,3 +73,32 @@ GetPaddleWidth = function (difficulty) {
     if (difficulty == Difficulty.Hard)
         return 50;
 }
+
+SelectEasy = function () {
+    RemoveActiveClass();
+    easyButton.classList.add("active");
+    if (game != null) Clear();
+    Load();
+}
+
+SelectNormal = function () {
+    RemoveActiveClass();
+    normalButton.classList.add("active");
+    if (game != null) Clear();
+    Load();
+}
+
+SelectDifficult = function () {
+    RemoveActiveClass();
+    hardButton.classList.add("active");
+    if (game != null) Clear();
+    Load();
+}
+
+RemoveActiveClass = function () {
+    var activeButtons = document.getElementsByClassName('active');
+
+    for (var i = 0; i <= activeButtons.length; i++) {
+        activeButtons.item(i).classList.remove("active");
+    }
+}
