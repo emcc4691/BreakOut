@@ -85,8 +85,8 @@ Game.prototype.move = function () {
     }
 
     if (game.countRemainingBlocks() === 0) {
-        TriggerGameWon();
         game.isPlaying = false;
+        GameWon();
     }
 
 }
@@ -101,6 +101,9 @@ Game.prototype.animationLoop = function () {
         return;
 
     game.move();
+
+    if (!game.isPlaying)
+        return;
 
     requestId = window.requestAnimFrame(game.animationLoop);
 }
