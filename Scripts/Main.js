@@ -79,7 +79,7 @@ DrawGameWon = function () {
 
 CountDown = function () {
     var sec = 4;
-    gameOver = false;
+    game.isPlaying = true;
     DrawCountDown("Ready?");
     countDownRequestID = window.setInterval(function () {
         game.clear();
@@ -108,13 +108,9 @@ DrawCountDown = function (sec) {
 }
 
 CanvasClicked = function () {
-    if (gameOver)
+    if (!game.isPlaying)
         Initialise();
-    else if (!game.isPlaying)
-        return;
-    else if (game.isMoving || isCountingDown)
-        Pause();
-    else if (isCountingDown)
+    else if (game.isMoving)
         Pause();
     else
         Start();

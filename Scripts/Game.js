@@ -77,15 +77,15 @@ Game.prototype.move = function () {
     this.ball.checkCollisionWithBlocks();
     this.ball.checkCollisionWithPaddle(this.paddle);
     this.draw();
-    gameOver = this.ball.checkBottomBoundary();
+    game.isPlaying = !this.ball.isCollisionWithBottomBoundary();
 
-    if (gameOver) {
+    if (!game.isPlaying) {
         TriggerGameOver();
     }
 
     if (game.countRemainingBlocks() === 0) {
-        gameOver = true;
         TriggerGameWon();
+        game.isPlaying = false;
     }
 
 }

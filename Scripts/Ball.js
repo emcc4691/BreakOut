@@ -52,7 +52,7 @@ Ball.prototype.checkCollisionWithWall = function () {
         this.changeDirection(false, true);
 }
 
-Ball.prototype.checkBottomBoundary = function () {
+Ball.prototype.isCollisionWithBottomBoundary = function () {
     var ballSouth = this.yCurrentPosition + this.radius;
     if (ballSouth >= game.canvas.height)
         return true;
