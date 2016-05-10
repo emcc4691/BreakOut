@@ -73,13 +73,22 @@ DrawGameWon = function () {
 }
 
 CountDown = function () {
-    var sec = 4;
+    sec = 4;
+    isCountingDown = true;
+    isCountDownPaused = false;
     game.isPlaying = true;
     DrawCountDown("Ready?");
+    DoCountDown();
+}
+
+DoCountDown = function () {
     countDownRequestID = window.setInterval(function () {
+        if (isCountDownPaused)
+            return;
         game.clear();
         if (sec === 0) {
             clearInterval(countDownRequestID);
+            isCountingDown = false;
             Start();
             return;
         }
@@ -103,7 +112,10 @@ DrawCountDown = function (sec) {
 }
 
 CanvasClicked = function () {
-    if (!game.isPlaying)
+    if (isCountingDown) {
+        isCountDownPaused = !isCountDownPaused;
+    }
+    else if (!game.isPlaying)
         Initialise();
     else if (game.isMoving)
         Pause();
